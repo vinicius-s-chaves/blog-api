@@ -1,0 +1,50 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "./generated"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum Visibility {
+  PUBLIC
+  PRIVATE
+}
+
+model User {
+  id       String    @id @default(uuid())
+  username String
+  email    String    @unique
+  password String
+  bio      String?
+  posts    Post[]
+  comments Comment[]
+
+  @@map("users")
+}
+
+model Post {
+  id         String     @id @default(uuid())
+  title      String
+  content    String
+  visibility Visibility @default(PUBLIC)
+  author_id  String
+  author     User       @relation(fields: [author_id], references: [id])
+  posted_at  DateTime   @default(now())
+  comments   Comment[]
+
+  @@map("posts")
+}
+
+model Comment {
+  id        String   @id @default(uuid())
+  content   String
+  author_id String
+  author    User     @relation(fields: [author_id], references: [id])
+  post_id   String
+  post      Post     @relation(fields: [post_id], references: [id])
+  posted_at DateTime @default(now())
+
+  @@map("comments")
+}

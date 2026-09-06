@@ -28,6 +28,24 @@ const validateUser = [
         .notEmpty().withMessage(`Password confirmation ${emptyErr}`)
 ]
 
+const validateUpdate = [
+    body()
+        .notEmpty().withMessage(`Request body ${emptyErr}`),
+    body("username")
+        .trim()
+        .optional()
+        .isLength({ min: 3, max: 100 }).withMessage(`Username ${lengthErr} 3 and 100 characters`),
+    body("email")
+        .trim()
+        .optional()
+        .isEmail().withMessage(`Email ${typeErr} email`)
+        .isLength({ min: 3, max: 100 }).withMessage(`Email ${lengthErr} 3 and 100 characters`),
+    body("bio")
+        .trim()
+        .optional()
+        .isLength({ min: 1, max: 100 }).withMessage(`Bio ${lengthErr} 1 and 255 characters`),
+]
+
 export const listUsers = async (req, res, next) => {
     const page = req.query.page || 1
     const pageSize = 3
@@ -56,8 +74,8 @@ export const createUser = [
     validateUser,
     async (req, res, next) => {
         const errors = validationResult(req)
-        const { username, email, password, confirmPassword, bio } = req.body
         if(!errors.isEmpty()) return res.status(400).json({ errors })
+        const { username, email, password, confirmPassword, bio } = req.body
         if(confirmPassword !== password) return res.status(400).json({ error: "Passwords do not match" })
         try {
             await prisma.user.create({
@@ -92,3 +110,32 @@ export const getUser = async (req, res, next) => {
         next(error)
     }
 }
+
+export const updateUser = [
+    validateUpdate,
+    async (req, res, next) => {
+        const errors = validationResult(req)
+        if(!errors.isEmpty()) return res.status(401).json({ errors })
+        const { id } = req.params
+        const { username, email, bio } = req.body
+        try {
+            const user = await prisma.user.findUnique({ where: { id } })
+            if(!user) return res.status(404).json({ message: "User Not Found" })
+            const modifiedUser = await prisma.user.update({
+                where: { id },
+                data: {
+                    username,
+                    email,
+                    bio
+                },
+                include: { password: false }
+            })
+            res.json({
+                message: "User updated successfully",
+                data: modifiedUser
+            })
+        } catch (error) {
+            next(error)
+        }
+    }
+]

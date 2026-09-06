@@ -139,3 +139,15 @@ export const updateUser = [
         }
     }
 ]
+
+export const deleteUser = async (req, res, next) => {
+    const { id } = req.params
+    try {
+        const user = await prisma.user.findUnique({ where: { id } })
+        if(!user) return res.status(404).json({ message: "User Not Found" })
+        await prisma.user.delete({ where: { id } })
+        res.json({ message: "User deleted successfully" })
+    } catch (error) {
+        next(error)
+    }
+}

@@ -56,7 +56,14 @@ export const listUsers = async (req, res, next) => {
             skip: offset,
             include: { 
                 password: false,
-                posts: true,
+                posts: {
+                    select: {
+                        id: true,
+                        title: true,
+                        visibility: true,
+                        posted_at: true
+                    }
+                },
                 comments: true
             },
             orderBy: { id: "asc" }
@@ -86,7 +93,7 @@ export const createUser = [
                     bio
                 }
             })
-            res.status(201).json({ message: "Created user successfully" })
+            res.status(201).json({ message: "User created successfully" })
         } catch (error) {
             next(error)
         }
@@ -115,7 +122,7 @@ export const updateUser = [
     validateUpdate,
     async (req, res, next) => {
         const errors = validationResult(req)
-        if(!errors.isEmpty()) return res.status(401).json({ errors })
+        if(!errors.isEmpty()) return res.status(400).json({ errors })
         const { id } = req.params
         const { username, email, bio } = req.body
         try {

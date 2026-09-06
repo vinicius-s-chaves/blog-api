@@ -85,15 +85,30 @@ export const createUser = [
         const { username, email, password, confirmPassword, bio } = req.body
         if(confirmPassword !== password) return res.status(400).json({ error: "Passwords do not match" })
         try {
-            await prisma.user.create({
+            const user = await prisma.user.create({
                 data: {
                     username,
                     email,
                     password,
                     bio
+                },
+                include: {
+                    password: false,
+                    posts: {
+                        select: {
+                            id: true,
+                            title: true,
+                            visibility: true,
+                            posted_at: true
+                        }
+                    },
+                    comments: true
                 }
             })
-            res.status(201).json({ message: "User created successfully" })
+            res.status(201).json({
+                message: "User created successfully",
+                data: user
+            })
         } catch (error) {
             next(error)
         }

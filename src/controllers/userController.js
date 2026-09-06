@@ -68,10 +68,27 @@ export const createUser = [
                     bio
                 }
             })
-
             res.status(201).json({ message: "Created user successfully" })
         } catch (error) {
             next(error)
         }
     }
 ]
+
+export const getUser = async (req, res, next) => {
+    const { id } = req.params
+    try {
+        const user = await prisma.user.findUnique({
+            where: { id },
+            include: {
+                password: false,
+                posts: true,
+                comments: true
+            }
+        })
+        if(!user) return res.status(404).json({ message: "User Not Found" })
+        res.json({ user })
+    } catch (error) {
+        next(error)
+    }
+}

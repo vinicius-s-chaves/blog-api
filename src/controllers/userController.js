@@ -35,9 +35,18 @@ export const listUsers = async (req, res, next) => {
     try {
         const users = await prisma.user.findMany({
             take: pageSize,
-            skip: offset
+            skip: offset,
+            include: { 
+                password: false,
+                posts: true,
+                comments: true
+            },
+            orderBy: { id: "asc" }
         })
-        res.json({ users })
+        res.json({
+            page,
+            data: users
+        })
     } catch (error) {
         next(error)
     }

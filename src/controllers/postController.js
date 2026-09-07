@@ -88,3 +88,26 @@ export const createPost = [
         }
     }
 ]
+
+export const getPost = async (req, res, next) => {
+    const { id } = req.params
+    try {
+        const post = await prisma.post.findUnique({
+            where: { id },
+            include: {
+                author: {
+                    select: {
+                        id: true,
+                        username: true
+                    }
+                },
+                comments: true,
+                author_id: false
+            }
+        })
+        if(!post) return res.status(404).json({ message: "Post Not Found" })
+        res.json(post)
+    } catch (error) {
+        next(error)
+    }
+}

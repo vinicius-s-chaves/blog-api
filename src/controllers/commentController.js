@@ -178,3 +178,15 @@ export const updateComment = [
         }
     }
 ]
+
+export const deleteComment = async (req, res, next) => {
+    const { id } = req.params
+    try {
+        const comment = await prisma.comment.findUnique({ where: { id } })
+        if(!comment) return res.status(404).json({ message: "Comment Not Found" })
+        await prisma.comment.delete({ where: { id } })
+        res.json({ message: "Comment deleted successfully" })
+    } catch (error) {
+        next(error)
+    }
+}

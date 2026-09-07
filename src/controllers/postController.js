@@ -168,3 +168,15 @@ export const updatePost = [
         }
     }
 ]
+
+export const deletePost = async (req, res, next) => {
+    const { id } = req.params
+    try {
+        const post = await prisma.post.findUnique({ where: { id } })
+        if(!post) return res.status(404).json({ message: "Post Not Found" })
+        await prisma.post.delete({ where: { id } })
+        res.json({ message: "Post deleted successfully" })
+    } catch (error) {
+        next(error)
+    }
+}

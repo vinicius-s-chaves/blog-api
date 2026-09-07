@@ -64,7 +64,19 @@ export const listUsers = async (req, res, next) => {
                         posted_at: true
                     }
                 },
-                comments: true
+                comments: {
+                    select: {
+                        id: true,
+                        content: true,
+                        post: {
+                            select: {
+                                id: true,
+                                title: true
+                            }
+                        },
+                        updated_at: true
+                    }
+                }
             },
             orderBy: { id: "asc" }
         })
@@ -102,7 +114,19 @@ export const createUser = [
                             posted_at: true
                         }
                     },
-                    comments: true
+                    comments: {
+                        select: {
+                            id: true,
+                            content: true,
+                            post: {
+                                select: {
+                                    id: true,
+                                    title: true
+                                }
+                            },
+                            updated_at: true
+                        }
+                    }
                 }
             })
             res.status(201).json({
@@ -122,8 +146,27 @@ export const getUser = async (req, res, next) => {
             where: { id },
             include: {
                 password: false,
-                posts: true,
-                comments: true
+                posts: {
+                    select: {
+                        id: true,
+                        title: true,
+                        visibility: true,
+                        posted_at: true
+                    }
+                },
+                comments: {
+                    select: {
+                        id: true,
+                        content: true,
+                        post: {
+                            select: {
+                                id: true,
+                                title: true
+                            }
+                        },
+                        updated_at: true
+                    }
+                }
             }
         })
         if(!user) return res.status(404).json({ message: "User Not Found" })
@@ -150,7 +193,30 @@ export const updateUser = [
                     email,
                     bio
                 },
-                include: { password: false }
+                include: {
+                    password: false,
+                    posts: {
+                        select: {
+                            id: true,
+                            title: true,
+                            visibility: true,
+                            posted_at: true
+                        }
+                    },
+                    comments: {
+                        select: {
+                            id: true,
+                            content: true,
+                            post: {
+                                select: {
+                                    id: true,
+                                    title: true
+                                }
+                            },
+                            updated_at: true
+                        }
+                    }
+                }
             })
             res.json({
                 message: "User updated successfully",

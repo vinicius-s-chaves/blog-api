@@ -94,3 +94,32 @@ export const createComment = [
         }
     }
 ]
+
+export const getComment = async (req, res, next) => {
+    const { id } = req.params
+    try {
+        const comment = await prisma.comment.findUnique({
+            where: { id },
+            include: {
+                author: {
+                    select: {
+                        id: true,
+                        username: true
+                    }
+                },
+                post: {
+                    select: {
+                        id: true,
+                        title: true
+                    }
+                },
+                author_id: false,
+                post_id: false
+            }
+        })
+        if(!comment) return res.status(404).json({ message: "Comment Not Found" })
+        res.json(comment)
+    } catch (error) {
+        next(error)
+    }
+}

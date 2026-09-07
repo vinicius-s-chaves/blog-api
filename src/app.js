@@ -1,6 +1,7 @@
 import express from "express"
 import { userRouter } from "./routes/userRouter.js"
 import { postRouter } from "./routes/postRouter.js"
+import { commentRouter } from "./routes/commentRouter.js"
 
 const app = express()
 const PORT = process.env.PORT || 3000
@@ -9,6 +10,7 @@ app.use(express.json())
 
 app.use("/users", userRouter)
 app.use("/posts", postRouter)
+app.use("/comments", commentRouter)
 
 app.use((req, res, next) => {
     res.status(404).json({ message: "Route Not Found" })

@@ -47,7 +47,7 @@ const validateUpdate = [
 ]
 
 export const listUsers = async (req, res, next) => {
-    const page = Number(req.query.page) || 1
+    const page = parseInt(req.query.page) || 1
     const pageSize = 3
     const offset = (page - 1) * pageSize
     try {

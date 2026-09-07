@@ -1,8 +1,12 @@
 import { Router } from "express";
-import { listComments } from "../controllers/commentController.js";
+import {
+    createComment,
+    listComments
+} from "../controllers/commentController.js";
 
 const commentRouter = Router()
 
 commentRouter.get("/", listComments)
+commentRouter.post("/", createComment)
 
 export { commentRouter }

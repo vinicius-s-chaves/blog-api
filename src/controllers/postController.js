@@ -57,7 +57,19 @@ export const listPosts = async (req, res, next) => {
                     }
                 },
                 author_id: false,
-                comments: true
+                comments: {
+                    select: {
+                        id: true,
+                        content: true,
+                        author: {
+                            select: {
+                                id: true,
+                                username: true,
+                            }
+                        },
+                        updated_at: true
+                    }
+                }
             },
             orderBy: { id: "asc" }
         })
@@ -93,8 +105,20 @@ export const createPost = [
                             username: true
                         }
                     },
-                    comments: true,
-                    author_id: false
+                    author_id: false,
+                    comments: {
+                        select: {
+                            id: true,
+                            content: true,
+                            author: {
+                                select: {
+                                    id: true,
+                                    username: true,
+                                }
+                            },
+                            updated_at: true
+                        }
+                    }
                 }
             })
             res.status(201).json({
@@ -119,8 +143,20 @@ export const getPost = async (req, res, next) => {
                         username: true
                     }
                 },
-                comments: true,
-                author_id: false
+                author_id: false,
+                comments: {
+                    select: {
+                        id: true,
+                        content: true,
+                        author: {
+                            select: {
+                                id: true,
+                                username: true,
+                            }
+                        },
+                        updated_at: true
+                    }
+                }
             }
         })
         if(!post) return res.status(404).json({ message: "Post Not Found" })
@@ -155,8 +191,20 @@ export const updatePost = [
                             username: true
                         }
                     },
-                    comments: true,
-                    author_id: false
+                    author_id: false,
+                    comments: {
+                        select: {
+                            id: true,
+                            content: true,
+                            author: {
+                                select: {
+                                    id: true,
+                                    username: true,
+                                }
+                            },
+                            updated_at: true
+                        }
+                    }
                 }
             })
             res.json({

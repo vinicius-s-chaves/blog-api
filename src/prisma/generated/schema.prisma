@@ -32,19 +32,21 @@ model Post {
   author_id  String
   author     User       @relation(fields: [author_id], references: [id])
   posted_at  DateTime   @default(now())
+  updated_at DateTime   @updatedAt
   comments   Comment[]
 
   @@map("posts")
 }
 
 model Comment {
-  id        String   @id @default(uuid())
-  content   String
-  author_id String
-  author    User     @relation(fields: [author_id], references: [id])
-  post_id   String
-  post      Post     @relation(fields: [post_id], references: [id])
-  posted_at DateTime @default(now())
+  id         String   @id @default(uuid())
+  content    String
+  author_id  String
+  author     User     @relation(fields: [author_id], references: [id])
+  post_id    String
+  post       Post     @relation(fields: [post_id], references: [id])
+  posted_at  DateTime @default(now())
+  updated_at DateTime @updatedAt
 
   @@map("comments")
 }

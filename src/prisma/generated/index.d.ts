@@ -2283,6 +2283,7 @@ export namespace Prisma {
     visibility: $Enums.Visibility | null
     author_id: string | null
     posted_at: Date | null
+    updated_at: Date | null
   }
 
   export type PostMaxAggregateOutputType = {
@@ -2292,6 +2293,7 @@ export namespace Prisma {
     visibility: $Enums.Visibility | null
     author_id: string | null
     posted_at: Date | null
+    updated_at: Date | null
   }
 
   export type PostCountAggregateOutputType = {
@@ -2301,6 +2303,7 @@ export namespace Prisma {
     visibility: number
     author_id: number
     posted_at: number
+    updated_at: number
     _all: number
   }
 
@@ -2312,6 +2315,7 @@ export namespace Prisma {
     visibility?: true
     author_id?: true
     posted_at?: true
+    updated_at?: true
   }
 
   export type PostMaxAggregateInputType = {
@@ -2321,6 +2325,7 @@ export namespace Prisma {
     visibility?: true
     author_id?: true
     posted_at?: true
+    updated_at?: true
   }
 
   export type PostCountAggregateInputType = {
@@ -2330,6 +2335,7 @@ export namespace Prisma {
     visibility?: true
     author_id?: true
     posted_at?: true
+    updated_at?: true
     _all?: true
   }
 
@@ -2412,6 +2418,7 @@ export namespace Prisma {
     visibility: $Enums.Visibility
     author_id: string
     posted_at: Date
+    updated_at: Date
     _count: PostCountAggregateOutputType | null
     _min: PostMinAggregateOutputType | null
     _max: PostMaxAggregateOutputType | null
@@ -2438,6 +2445,7 @@ export namespace Prisma {
     visibility?: boolean
     author_id?: boolean
     posted_at?: boolean
+    updated_at?: boolean
     author?: boolean | UserDefaultArgs<ExtArgs>
     comments?: boolean | Post$commentsArgs<ExtArgs>
     _count?: boolean | PostCountOutputTypeDefaultArgs<ExtArgs>
@@ -2450,6 +2458,7 @@ export namespace Prisma {
     visibility?: boolean
     author_id?: boolean
     posted_at?: boolean
+    updated_at?: boolean
     author?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["post"]>
 
@@ -2460,6 +2469,7 @@ export namespace Prisma {
     visibility?: boolean
     author_id?: boolean
     posted_at?: boolean
+    updated_at?: boolean
     author?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["post"]>
 
@@ -2470,9 +2480,10 @@ export namespace Prisma {
     visibility?: boolean
     author_id?: boolean
     posted_at?: boolean
+    updated_at?: boolean
   }
 
-  export type PostOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "content" | "visibility" | "author_id" | "posted_at", ExtArgs["result"]["post"]>
+  export type PostOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "content" | "visibility" | "author_id" | "posted_at" | "updated_at", ExtArgs["result"]["post"]>
   export type PostInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     author?: boolean | UserDefaultArgs<ExtArgs>
     comments?: boolean | Post$commentsArgs<ExtArgs>
@@ -2498,6 +2509,7 @@ export namespace Prisma {
       visibility: $Enums.Visibility
       author_id: string
       posted_at: Date
+      updated_at: Date
     }, ExtArgs["result"]["post"]>
     composites: {}
   }
@@ -2929,6 +2941,7 @@ export namespace Prisma {
     readonly visibility: FieldRef<"Post", 'Visibility'>
     readonly author_id: FieldRef<"Post", 'String'>
     readonly posted_at: FieldRef<"Post", 'DateTime'>
+    readonly updated_at: FieldRef<"Post", 'DateTime'>
   }
     
 
@@ -3388,6 +3401,7 @@ export namespace Prisma {
     author_id: string | null
     post_id: string | null
     posted_at: Date | null
+    updated_at: Date | null
   }
 
   export type CommentMaxAggregateOutputType = {
@@ -3396,6 +3410,7 @@ export namespace Prisma {
     author_id: string | null
     post_id: string | null
     posted_at: Date | null
+    updated_at: Date | null
   }
 
   export type CommentCountAggregateOutputType = {
@@ -3404,6 +3419,7 @@ export namespace Prisma {
     author_id: number
     post_id: number
     posted_at: number
+    updated_at: number
     _all: number
   }
 
@@ -3414,6 +3430,7 @@ export namespace Prisma {
     author_id?: true
     post_id?: true
     posted_at?: true
+    updated_at?: true
   }
 
   export type CommentMaxAggregateInputType = {
@@ -3422,6 +3439,7 @@ export namespace Prisma {
     author_id?: true
     post_id?: true
     posted_at?: true
+    updated_at?: true
   }
 
   export type CommentCountAggregateInputType = {
@@ -3430,6 +3448,7 @@ export namespace Prisma {
     author_id?: true
     post_id?: true
     posted_at?: true
+    updated_at?: true
     _all?: true
   }
 
@@ -3511,6 +3530,7 @@ export namespace Prisma {
     author_id: string
     post_id: string
     posted_at: Date
+    updated_at: Date
     _count: CommentCountAggregateOutputType | null
     _min: CommentMinAggregateOutputType | null
     _max: CommentMaxAggregateOutputType | null
@@ -3536,6 +3556,7 @@ export namespace Prisma {
     author_id?: boolean
     post_id?: boolean
     posted_at?: boolean
+    updated_at?: boolean
     author?: boolean | UserDefaultArgs<ExtArgs>
     post?: boolean | PostDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["comment"]>
@@ -3546,6 +3567,7 @@ export namespace Prisma {
     author_id?: boolean
     post_id?: boolean
     posted_at?: boolean
+    updated_at?: boolean
     author?: boolean | UserDefaultArgs<ExtArgs>
     post?: boolean | PostDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["comment"]>
@@ -3556,6 +3578,7 @@ export namespace Prisma {
     author_id?: boolean
     post_id?: boolean
     posted_at?: boolean
+    updated_at?: boolean
     author?: boolean | UserDefaultArgs<ExtArgs>
     post?: boolean | PostDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["comment"]>
@@ -3566,9 +3589,10 @@ export namespace Prisma {
     author_id?: boolean
     post_id?: boolean
     posted_at?: boolean
+    updated_at?: boolean
   }
 
-  export type CommentOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "content" | "author_id" | "post_id" | "posted_at", ExtArgs["result"]["comment"]>
+  export type CommentOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "content" | "author_id" | "post_id" | "posted_at" | "updated_at", ExtArgs["result"]["comment"]>
   export type CommentInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     author?: boolean | UserDefaultArgs<ExtArgs>
     post?: boolean | PostDefaultArgs<ExtArgs>
@@ -3594,6 +3618,7 @@ export namespace Prisma {
       author_id: string
       post_id: string
       posted_at: Date
+      updated_at: Date
     }, ExtArgs["result"]["comment"]>
     composites: {}
   }
@@ -4024,6 +4049,7 @@ export namespace Prisma {
     readonly author_id: FieldRef<"Comment", 'String'>
     readonly post_id: FieldRef<"Comment", 'String'>
     readonly posted_at: FieldRef<"Comment", 'DateTime'>
+    readonly updated_at: FieldRef<"Comment", 'DateTime'>
   }
     
 
@@ -4474,7 +4500,8 @@ export namespace Prisma {
     content: 'content',
     visibility: 'visibility',
     author_id: 'author_id',
-    posted_at: 'posted_at'
+    posted_at: 'posted_at',
+    updated_at: 'updated_at'
   };
 
   export type PostScalarFieldEnum = (typeof PostScalarFieldEnum)[keyof typeof PostScalarFieldEnum]
@@ -4485,7 +4512,8 @@ export namespace Prisma {
     content: 'content',
     author_id: 'author_id',
     post_id: 'post_id',
-    posted_at: 'posted_at'
+    posted_at: 'posted_at',
+    updated_at: 'updated_at'
   };
 
   export type CommentScalarFieldEnum = (typeof CommentScalarFieldEnum)[keyof typeof CommentScalarFieldEnum]
@@ -4647,6 +4675,7 @@ export namespace Prisma {
     visibility?: EnumVisibilityFilter<"Post"> | $Enums.Visibility
     author_id?: StringFilter<"Post"> | string
     posted_at?: DateTimeFilter<"Post"> | Date | string
+    updated_at?: DateTimeFilter<"Post"> | Date | string
     author?: XOR<UserScalarRelationFilter, UserWhereInput>
     comments?: CommentListRelationFilter
   }
@@ -4658,6 +4687,7 @@ export namespace Prisma {
     visibility?: SortOrder
     author_id?: SortOrder
     posted_at?: SortOrder
+    updated_at?: SortOrder
     author?: UserOrderByWithRelationInput
     comments?: CommentOrderByRelationAggregateInput
   }
@@ -4672,6 +4702,7 @@ export namespace Prisma {
     visibility?: EnumVisibilityFilter<"Post"> | $Enums.Visibility
     author_id?: StringFilter<"Post"> | string
     posted_at?: DateTimeFilter<"Post"> | Date | string
+    updated_at?: DateTimeFilter<"Post"> | Date | string
     author?: XOR<UserScalarRelationFilter, UserWhereInput>
     comments?: CommentListRelationFilter
   }, "id">
@@ -4683,6 +4714,7 @@ export namespace Prisma {
     visibility?: SortOrder
     author_id?: SortOrder
     posted_at?: SortOrder
+    updated_at?: SortOrder
     _count?: PostCountOrderByAggregateInput
     _max?: PostMaxOrderByAggregateInput
     _min?: PostMinOrderByAggregateInput
@@ -4698,6 +4730,7 @@ export namespace Prisma {
     visibility?: EnumVisibilityWithAggregatesFilter<"Post"> | $Enums.Visibility
     author_id?: StringWithAggregatesFilter<"Post"> | string
     posted_at?: DateTimeWithAggregatesFilter<"Post"> | Date | string
+    updated_at?: DateTimeWithAggregatesFilter<"Post"> | Date | string
   }
 
   export type CommentWhereInput = {
@@ -4709,6 +4742,7 @@ export namespace Prisma {
     author_id?: StringFilter<"Comment"> | string
     post_id?: StringFilter<"Comment"> | string
     posted_at?: DateTimeFilter<"Comment"> | Date | string
+    updated_at?: DateTimeFilter<"Comment"> | Date | string
     author?: XOR<UserScalarRelationFilter, UserWhereInput>
     post?: XOR<PostScalarRelationFilter, PostWhereInput>
   }
@@ -4719,6 +4753,7 @@ export namespace Prisma {
     author_id?: SortOrder
     post_id?: SortOrder
     posted_at?: SortOrder
+    updated_at?: SortOrder
     author?: UserOrderByWithRelationInput
     post?: PostOrderByWithRelationInput
   }
@@ -4732,6 +4767,7 @@ export namespace Prisma {
     author_id?: StringFilter<"Comment"> | string
     post_id?: StringFilter<"Comment"> | string
     posted_at?: DateTimeFilter<"Comment"> | Date | string
+    updated_at?: DateTimeFilter<"Comment"> | Date | string
     author?: XOR<UserScalarRelationFilter, UserWhereInput>
     post?: XOR<PostScalarRelationFilter, PostWhereInput>
   }, "id">
@@ -4742,6 +4778,7 @@ export namespace Prisma {
     author_id?: SortOrder
     post_id?: SortOrder
     posted_at?: SortOrder
+    updated_at?: SortOrder
     _count?: CommentCountOrderByAggregateInput
     _max?: CommentMaxOrderByAggregateInput
     _min?: CommentMinOrderByAggregateInput
@@ -4756,6 +4793,7 @@ export namespace Prisma {
     author_id?: StringWithAggregatesFilter<"Comment"> | string
     post_id?: StringWithAggregatesFilter<"Comment"> | string
     posted_at?: DateTimeWithAggregatesFilter<"Comment"> | Date | string
+    updated_at?: DateTimeWithAggregatesFilter<"Comment"> | Date | string
   }
 
   export type UserCreateInput = {
@@ -4828,6 +4866,7 @@ export namespace Prisma {
     content: string
     visibility?: $Enums.Visibility
     posted_at?: Date | string
+    updated_at?: Date | string
     author: UserCreateNestedOneWithoutPostsInput
     comments?: CommentCreateNestedManyWithoutPostInput
   }
@@ -4839,6 +4878,7 @@ export namespace Prisma {
     visibility?: $Enums.Visibility
     author_id: string
     posted_at?: Date | string
+    updated_at?: Date | string
     comments?: CommentUncheckedCreateNestedManyWithoutPostInput
   }
 
@@ -4848,6 +4888,7 @@ export namespace Prisma {
     content?: StringFieldUpdateOperationsInput | string
     visibility?: EnumVisibilityFieldUpdateOperationsInput | $Enums.Visibility
     posted_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     author?: UserUpdateOneRequiredWithoutPostsNestedInput
     comments?: CommentUpdateManyWithoutPostNestedInput
   }
@@ -4859,6 +4900,7 @@ export namespace Prisma {
     visibility?: EnumVisibilityFieldUpdateOperationsInput | $Enums.Visibility
     author_id?: StringFieldUpdateOperationsInput | string
     posted_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     comments?: CommentUncheckedUpdateManyWithoutPostNestedInput
   }
 
@@ -4869,6 +4911,7 @@ export namespace Prisma {
     visibility?: $Enums.Visibility
     author_id: string
     posted_at?: Date | string
+    updated_at?: Date | string
   }
 
   export type PostUpdateManyMutationInput = {
@@ -4877,6 +4920,7 @@ export namespace Prisma {
     content?: StringFieldUpdateOperationsInput | string
     visibility?: EnumVisibilityFieldUpdateOperationsInput | $Enums.Visibility
     posted_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type PostUncheckedUpdateManyInput = {
@@ -4886,12 +4930,14 @@ export namespace Prisma {
     visibility?: EnumVisibilityFieldUpdateOperationsInput | $Enums.Visibility
     author_id?: StringFieldUpdateOperationsInput | string
     posted_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type CommentCreateInput = {
     id?: string
     content: string
     posted_at?: Date | string
+    updated_at?: Date | string
     author: UserCreateNestedOneWithoutCommentsInput
     post: PostCreateNestedOneWithoutCommentsInput
   }
@@ -4902,12 +4948,14 @@ export namespace Prisma {
     author_id: string
     post_id: string
     posted_at?: Date | string
+    updated_at?: Date | string
   }
 
   export type CommentUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
     posted_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     author?: UserUpdateOneRequiredWithoutCommentsNestedInput
     post?: PostUpdateOneRequiredWithoutCommentsNestedInput
   }
@@ -4918,6 +4966,7 @@ export namespace Prisma {
     author_id?: StringFieldUpdateOperationsInput | string
     post_id?: StringFieldUpdateOperationsInput | string
     posted_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type CommentCreateManyInput = {
@@ -4926,12 +4975,14 @@ export namespace Prisma {
     author_id: string
     post_id: string
     posted_at?: Date | string
+    updated_at?: Date | string
   }
 
   export type CommentUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
     posted_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type CommentUncheckedUpdateManyInput = {
@@ -4940,6 +4991,7 @@ export namespace Prisma {
     author_id?: StringFieldUpdateOperationsInput | string
     post_id?: StringFieldUpdateOperationsInput | string
     posted_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type StringFilter<$PrismaModel = never> = {
@@ -5087,6 +5139,7 @@ export namespace Prisma {
     visibility?: SortOrder
     author_id?: SortOrder
     posted_at?: SortOrder
+    updated_at?: SortOrder
   }
 
   export type PostMaxOrderByAggregateInput = {
@@ -5096,6 +5149,7 @@ export namespace Prisma {
     visibility?: SortOrder
     author_id?: SortOrder
     posted_at?: SortOrder
+    updated_at?: SortOrder
   }
 
   export type PostMinOrderByAggregateInput = {
@@ -5105,6 +5159,7 @@ export namespace Prisma {
     visibility?: SortOrder
     author_id?: SortOrder
     posted_at?: SortOrder
+    updated_at?: SortOrder
   }
 
   export type EnumVisibilityWithAggregatesFilter<$PrismaModel = never> = {
@@ -5142,6 +5197,7 @@ export namespace Prisma {
     author_id?: SortOrder
     post_id?: SortOrder
     posted_at?: SortOrder
+    updated_at?: SortOrder
   }
 
   export type CommentMaxOrderByAggregateInput = {
@@ -5150,6 +5206,7 @@ export namespace Prisma {
     author_id?: SortOrder
     post_id?: SortOrder
     posted_at?: SortOrder
+    updated_at?: SortOrder
   }
 
   export type CommentMinOrderByAggregateInput = {
@@ -5158,6 +5215,7 @@ export namespace Prisma {
     author_id?: SortOrder
     post_id?: SortOrder
     posted_at?: SortOrder
+    updated_at?: SortOrder
   }
 
   export type PostCreateNestedManyWithoutAuthorInput = {
@@ -5476,6 +5534,7 @@ export namespace Prisma {
     content: string
     visibility?: $Enums.Visibility
     posted_at?: Date | string
+    updated_at?: Date | string
     comments?: CommentCreateNestedManyWithoutPostInput
   }
 
@@ -5485,6 +5544,7 @@ export namespace Prisma {
     content: string
     visibility?: $Enums.Visibility
     posted_at?: Date | string
+    updated_at?: Date | string
     comments?: CommentUncheckedCreateNestedManyWithoutPostInput
   }
 
@@ -5502,6 +5562,7 @@ export namespace Prisma {
     id?: string
     content: string
     posted_at?: Date | string
+    updated_at?: Date | string
     post: PostCreateNestedOneWithoutCommentsInput
   }
 
@@ -5510,6 +5571,7 @@ export namespace Prisma {
     content: string
     post_id: string
     posted_at?: Date | string
+    updated_at?: Date | string
   }
 
   export type CommentCreateOrConnectWithoutAuthorInput = {
@@ -5548,6 +5610,7 @@ export namespace Prisma {
     visibility?: EnumVisibilityFilter<"Post"> | $Enums.Visibility
     author_id?: StringFilter<"Post"> | string
     posted_at?: DateTimeFilter<"Post"> | Date | string
+    updated_at?: DateTimeFilter<"Post"> | Date | string
   }
 
   export type CommentUpsertWithWhereUniqueWithoutAuthorInput = {
@@ -5575,6 +5638,7 @@ export namespace Prisma {
     author_id?: StringFilter<"Comment"> | string
     post_id?: StringFilter<"Comment"> | string
     posted_at?: DateTimeFilter<"Comment"> | Date | string
+    updated_at?: DateTimeFilter<"Comment"> | Date | string
   }
 
   export type UserCreateWithoutPostsInput = {
@@ -5604,6 +5668,7 @@ export namespace Prisma {
     id?: string
     content: string
     posted_at?: Date | string
+    updated_at?: Date | string
     author: UserCreateNestedOneWithoutCommentsInput
   }
 
@@ -5612,6 +5677,7 @@ export namespace Prisma {
     content: string
     author_id: string
     posted_at?: Date | string
+    updated_at?: Date | string
   }
 
   export type CommentCreateOrConnectWithoutPostInput = {
@@ -5698,6 +5764,7 @@ export namespace Prisma {
     content: string
     visibility?: $Enums.Visibility
     posted_at?: Date | string
+    updated_at?: Date | string
     author: UserCreateNestedOneWithoutPostsInput
   }
 
@@ -5708,6 +5775,7 @@ export namespace Prisma {
     visibility?: $Enums.Visibility
     author_id: string
     posted_at?: Date | string
+    updated_at?: Date | string
   }
 
   export type PostCreateOrConnectWithoutCommentsInput = {
@@ -5761,6 +5829,7 @@ export namespace Prisma {
     content?: StringFieldUpdateOperationsInput | string
     visibility?: EnumVisibilityFieldUpdateOperationsInput | $Enums.Visibility
     posted_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     author?: UserUpdateOneRequiredWithoutPostsNestedInput
   }
 
@@ -5771,6 +5840,7 @@ export namespace Prisma {
     visibility?: EnumVisibilityFieldUpdateOperationsInput | $Enums.Visibility
     author_id?: StringFieldUpdateOperationsInput | string
     posted_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type PostCreateManyAuthorInput = {
@@ -5779,6 +5849,7 @@ export namespace Prisma {
     content: string
     visibility?: $Enums.Visibility
     posted_at?: Date | string
+    updated_at?: Date | string
   }
 
   export type CommentCreateManyAuthorInput = {
@@ -5786,6 +5857,7 @@ export namespace Prisma {
     content: string
     post_id: string
     posted_at?: Date | string
+    updated_at?: Date | string
   }
 
   export type PostUpdateWithoutAuthorInput = {
@@ -5794,6 +5866,7 @@ export namespace Prisma {
     content?: StringFieldUpdateOperationsInput | string
     visibility?: EnumVisibilityFieldUpdateOperationsInput | $Enums.Visibility
     posted_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     comments?: CommentUpdateManyWithoutPostNestedInput
   }
 
@@ -5803,6 +5876,7 @@ export namespace Prisma {
     content?: StringFieldUpdateOperationsInput | string
     visibility?: EnumVisibilityFieldUpdateOperationsInput | $Enums.Visibility
     posted_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     comments?: CommentUncheckedUpdateManyWithoutPostNestedInput
   }
 
@@ -5812,12 +5886,14 @@ export namespace Prisma {
     content?: StringFieldUpdateOperationsInput | string
     visibility?: EnumVisibilityFieldUpdateOperationsInput | $Enums.Visibility
     posted_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type CommentUpdateWithoutAuthorInput = {
     id?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
     posted_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     post?: PostUpdateOneRequiredWithoutCommentsNestedInput
   }
 
@@ -5826,6 +5902,7 @@ export namespace Prisma {
     content?: StringFieldUpdateOperationsInput | string
     post_id?: StringFieldUpdateOperationsInput | string
     posted_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type CommentUncheckedUpdateManyWithoutAuthorInput = {
@@ -5833,6 +5910,7 @@ export namespace Prisma {
     content?: StringFieldUpdateOperationsInput | string
     post_id?: StringFieldUpdateOperationsInput | string
     posted_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type CommentCreateManyPostInput = {
@@ -5840,12 +5918,14 @@ export namespace Prisma {
     content: string
     author_id: string
     posted_at?: Date | string
+    updated_at?: Date | string
   }
 
   export type CommentUpdateWithoutPostInput = {
     id?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
     posted_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     author?: UserUpdateOneRequiredWithoutCommentsNestedInput
   }
 
@@ -5854,6 +5934,7 @@ export namespace Prisma {
     content?: StringFieldUpdateOperationsInput | string
     author_id?: StringFieldUpdateOperationsInput | string
     posted_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type CommentUncheckedUpdateManyWithoutPostInput = {
@@ -5861,6 +5942,7 @@ export namespace Prisma {
     content?: StringFieldUpdateOperationsInput | string
     author_id?: StringFieldUpdateOperationsInput | string
     posted_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
 

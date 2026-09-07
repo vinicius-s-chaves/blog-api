@@ -134,7 +134,8 @@ exports.Prisma.PostScalarFieldEnum = {
   content: 'content',
   visibility: 'visibility',
   author_id: 'author_id',
-  posted_at: 'posted_at'
+  posted_at: 'posted_at',
+  updated_at: 'updated_at'
 };
 
 exports.Prisma.CommentScalarFieldEnum = {
@@ -142,7 +143,8 @@ exports.Prisma.CommentScalarFieldEnum = {
   content: 'content',
   author_id: 'author_id',
   post_id: 'post_id',
-  posted_at: 'posted_at'
+  posted_at: 'posted_at',
+  updated_at: 'updated_at'
 };
 
 exports.Prisma.SortOrder = {

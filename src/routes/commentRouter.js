@@ -2,7 +2,8 @@ import { Router } from "express";
 import {
     createComment,
     getComment,
-    listComments
+    listComments,
+    updateComment
 } from "../controllers/commentController.js";
 
 const commentRouter = Router()
@@ -10,5 +11,6 @@ const commentRouter = Router()
 commentRouter.get("/", listComments)
 commentRouter.post("/", createComment)
 commentRouter.get("/:id", getComment)
+commentRouter.put("/:id", updateComment)
 
 export { commentRouter }

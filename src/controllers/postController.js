@@ -1,5 +1,6 @@
 import { prisma } from "../lib/prisma.js";
 import { body, validationResult } from "express-validator";
+import CustomNotFoundError from "../utils/CustomNotFoundError.js"
 
 const emptyErr = "is required"
 const lengthErr = "must be between"
@@ -86,11 +87,11 @@ export const createPost = [
     validatePost,
     async (req, res, next) => {
         const errors = validationResult(req)
-        if(!errors.isEmpty()) return res.status(400).json({ errors })
+        if(!errors.isEmpty()) return next(errors)
         const { title, content, visibility, author_id } = req.body
         try {
             const author = await prisma.user.findUnique({ where: { id: author_id } })
-            if(!author) return res.status(404).json({ message: "Author Not Found" })
+            if(!author) return next(new CustomNotFoundError("Author Not Found"))
             const post = await prisma.post.create({
                 data: {
                     title,
@@ -170,7 +171,7 @@ export const updatePost = [
     validateUpdate,
     async (req, res, next) => {
         const errors = validationResult(req)
-        if(!errors.isEmpty()) return res.status(400).json({ errors })
+        if(!errors.isEmpty()) return next(errors)
         const { id } = req.params
         const { title, content, visibility, author_id } = req.body
         try {

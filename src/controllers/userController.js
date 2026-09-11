@@ -93,7 +93,7 @@ export const createUser = [
     validateUser,
     async (req, res, next) => {
         const errors = validationResult(req)
-        if(!errors.isEmpty()) return res.status(400).json({ errors })
+        if(!errors.isEmpty()) return next(errors)
         const { username, email, password, confirmPassword, bio } = req.body
         if(confirmPassword !== password) return res.status(400).json({ error: "Passwords do not match" })
         try {
@@ -180,7 +180,7 @@ export const updateUser = [
     validateUpdate,
     async (req, res, next) => {
         const errors = validationResult(req)
-        if(!errors.isEmpty()) return res.status(400).json({ errors })
+        if(!errors.isEmpty()) return next(errors)
         const { id } = req.params
         const { username, email, bio } = req.body
         try {

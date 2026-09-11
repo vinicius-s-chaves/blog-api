@@ -68,7 +68,7 @@ export const createComment = [
     validateComment,
     async (req, res, next) => {
         const errors = validationResult(req)
-        if(!errors.isEmpty()) return res.status(400).json({ errors })
+        if(!errors.isEmpty()) return next(errors)
         const { content, author_id, post_id } = req.body
         try {
             const author = await prisma.user.findUnique({ where: { id: author_id } })
@@ -141,7 +141,7 @@ export const updateComment = [
     validateUpdate,
     async (req, res, next) => {
         const errors = validationResult(req)
-        if(!errors.isEmpty()) return res.status(400).json({ errors })
+        if(!errors.isEmpty()) return next(errors)
         const { id } = req.params
         const { content } = req.body
         try {

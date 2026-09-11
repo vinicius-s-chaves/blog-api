@@ -2,6 +2,7 @@ import express from "express"
 import { userRouter } from "./routes/userRouter.js"
 import { postRouter } from "./routes/postRouter.js"
 import { commentRouter } from "./routes/commentRouter.js"
+import { errorHandler, notFound } from "./middlewares/errorHandler.js"
 
 const app = express()
 const PORT = process.env.PORT || 3000
@@ -12,14 +13,8 @@ app.use("/users", userRouter)
 app.use("/posts", postRouter)
 app.use("/comments", commentRouter)
 
-app.use((req, res, next) => {
-    res.status(404).json({ message: "Route Not Found" })
-})
-
-app.use((err, req, res, next) => {
-    console.log(err)
-    res.status(500).json({ message: "Internal Server Error" })
-})
+app.use(notFound)
+app.use(errorHandler)
 
 app.listen(PORT, err => {
     if(err) {

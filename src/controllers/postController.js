@@ -1,7 +1,7 @@
 import { prisma } from "../lib/prisma.js";
-import CustomNotFoundError from "../utils/CustomNotFoundError.js"
 import { validationResult } from "express-validator";
 import { validatePost, validatePostUpdate } from "../utils/validations.js";
+import CustomError from "../utils/CustomError.js"
 
 export const listPosts = async (req, res, next) => {
     const page = parseInt(req.query.page) || 1
@@ -121,7 +121,7 @@ export const getPost = async (req, res, next) => {
                 }
             }
         })
-        if(!post) return res.status(404).json({ message: "Post Not Found" })
+        if(!post) return next(new CustomError("Post Not Found", 404))
         res.json(post)
     } catch (error) {
         next(error)
@@ -137,7 +137,7 @@ export const updatePost = [
         const { title, content, visibility, author_id } = req.body
         try {
             const post = await prisma.post.findUnique({ where: { id } })
-            if(!post) return res.status(404).json({ message: "Post Not Found" })
+            if(!post) return next(new CustomError("Post Not Found", 404))
             const modifiedPost = await prisma.post.update({
                 where: { id },
                 data: {
@@ -183,7 +183,7 @@ export const deletePost = async (req, res, next) => {
     const { id } = req.params
     try {
         const post = await prisma.post.findUnique({ where: { id } })
-        if(!post) return res.status(404).json({ message: "Post Not Found" })
+        if(!post) return next(new CustomError("Post Not Found", 404))
         await prisma.post.delete({ where: { id } })
         res.json({ message: "Post deleted successfully" })
     } catch (error) {

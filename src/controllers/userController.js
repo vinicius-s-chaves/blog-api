@@ -1,6 +1,7 @@
 import { prisma } from "../lib/prisma.js"
 import { validationResult } from "express-validator"
 import { validateUser, validateUserUpdate } from "../utils/validations.js"
+import CustomError from "../utils/CustomError.js"
 
 export const listUsers = async (req, res, next) => {
     const page = parseInt(req.query.page) || 1
@@ -125,7 +126,7 @@ export const getUser = async (req, res, next) => {
                 }
             }
         })
-        if(!user) return res.status(404).json({ message: "User Not Found" })
+        if(!user) return next(new CustomError("User Not Found", 404))
         res.json(user)
     } catch (error) {
         next(error)
@@ -141,7 +142,7 @@ export const updateUser = [
         const { username, email, bio } = req.body
         try {
             const user = await prisma.user.findUnique({ where: { id } })
-            if(!user) return res.status(404).json({ message: "User Not Found" })
+            if(!user) return next(new CustomError("User Not Found", 404))
             const modifiedUser = await prisma.user.update({
                 where: { id },
                 data: {
@@ -188,7 +189,7 @@ export const deleteUser = async (req, res, next) => {
     const { id } = req.params
     try {
         const user = await prisma.user.findUnique({ where: { id } })
-        if(!user) return res.status(404).json({ message: "User Not Found" })
+        if(!user) return next(new CustomError("User Not Found", 404))
         await prisma.user.delete({ where: { id } })
         res.json({ message: "User deleted successfully" })
     } catch (error) {

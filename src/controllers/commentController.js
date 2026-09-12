@@ -1,6 +1,7 @@
 import { prisma } from "../lib/prisma.js";
 import { validationResult } from "express-validator";
 import { validateComment, validateCommentUpdate } from "../utils/validations.js";
+import CustomError from "../utils/CustomError.js"
 
 export const listComments = async (req, res, next) => {
     const page = parseInt(req.query.page) || 1
@@ -44,9 +45,9 @@ export const createComment = [
         const { content, author_id, post_id } = req.body
         try {
             const author = await prisma.user.findUnique({ where: { id: author_id } })
-            if(!author) return res.status(404).json({ message: "Author Not Found" })
+            if(!author) return next(new CustomError("Author Not Found", 404))
             const post = await prisma.post.findUnique({ where: { id: post_id } })
-            if(!post) return res.status(404).json({ message: "Post Not Found" })
+            if(!post) return next(new CustomError("Post Not Found", 404))
             const comment = await prisma.comment.create({
                 data: {
                     content,
@@ -102,7 +103,7 @@ export const getComment = async (req, res, next) => {
                 post_id: false
             }
         })
-        if(!comment) return res.status(404).json({ message: "Comment Not Found" })
+        if(!comment) return next(new CustomError("Comment Not Found", 404))
         res.json(comment)
     } catch (error) {
         next(error)
@@ -118,7 +119,7 @@ export const updateComment = [
         const { content } = req.body
         try {
             const comment = await prisma.comment.findUnique({ where: { id } })
-            if(!comment) return res.status(404).json({ message: "User Not Found" })
+            if(!comment) return next(new CustomError("Comment Not Found", 404))
             const modifiedComment = await prisma.comment.update({
                 where: { id },
                 data: {
@@ -155,7 +156,7 @@ export const deleteComment = async (req, res, next) => {
     const { id } = req.params
     try {
         const comment = await prisma.comment.findUnique({ where: { id } })
-        if(!comment) return res.status(404).json({ message: "Comment Not Found" })
+        if(!comment) return next(new CustomError("Comment Not Found", 404))
         await prisma.comment.delete({ where: { id } })
         res.json({ message: "Comment deleted successfully" })
     } catch (error) {

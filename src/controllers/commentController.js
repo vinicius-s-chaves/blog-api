@@ -1,34 +1,6 @@
 import { prisma } from "../lib/prisma.js";
-import { body, validationResult } from "express-validator";
-
-const emptyErr = "is required"
-const lengthErr = "must be between"
-
-const validateComment = [
-    body()
-        .notEmpty().withMessage(`Comment data ${emptyErr}`),
-        body("content")
-        .trim()
-        .notEmpty().withMessage(`Content ${emptyErr}`)
-        .isLength({ min: 1, max: 255 }).withMessage(`Comment ${lengthErr} 1 and 255 characters`),
-    body("author_id")
-        .notEmpty().withMessage(`Author ${emptyErr}`),
-    body("post_id")
-        .notEmpty().withMessage(`Post ${emptyErr}`)
-]
-
-const validateUpdate = [
-    body()
-        .notEmpty().withMessage(`Comment data ${emptyErr}`),
-    body("content")
-        .trim()
-        .optional()
-        .isLength({ min: 1, max: 255 }).withMessage(`Comment ${lengthErr} 1 and 255 characters`),
-    body("author_id")
-        .optional(),
-    body("post_id")
-        .optional()
-]
+import { validationResult } from "express-validator";
+import { validateComment, validateCommentUpdate } from "../utils/validations.js";
 
 export const listComments = async (req, res, next) => {
     const page = parseInt(req.query.page) || 1
@@ -68,7 +40,7 @@ export const createComment = [
     validateComment,
     async (req, res, next) => {
         const errors = validationResult(req)
-        if(!errors.isEmpty()) return next(errors)
+        if(!errors.isEmpty()) return res.status(400).json(errors)
         const { content, author_id, post_id } = req.body
         try {
             const author = await prisma.user.findUnique({ where: { id: author_id } })
@@ -138,10 +110,10 @@ export const getComment = async (req, res, next) => {
 }
 
 export const updateComment = [
-    validateUpdate,
+    validateCommentUpdate,
     async (req, res, next) => {
         const errors = validationResult(req)
-        if(!errors.isEmpty()) return next(errors)
+        if(!errors.isEmpty()) return res.status(400).json(errors)
         const { id } = req.params
         const { content } = req.body
         try {

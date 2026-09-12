@@ -1,50 +1,6 @@
 import { prisma } from "../lib/prisma.js"
-import { body, validationResult } from "express-validator"
-
-const emptyErr = "is required"
-const lengthErr = "must be between"
-const typeErr = "must be of type"
-
-const validateUser = [
-    body()
-        .notEmpty().withMessage(`Request body ${emptyErr}`),
-    body("username")
-        .trim()
-        .notEmpty().withMessage(`Username ${emptyErr}`)
-        .isLength({ min: 3, max: 100 }).withMessage(`Username ${lengthErr} 3 and 100 characters`),
-    body("email")
-        .trim()
-        .notEmpty().withMessage(`Email ${emptyErr}`)
-        .isEmail().withMessage(`Email ${typeErr} email`)
-        .isLength({ min: 3, max: 100 }).withMessage(`Email ${lengthErr} 3 and 100 characters`),
-    body("bio")
-        .trim()
-        .optional()
-        .isLength({ min: 1, max: 100 }).withMessage(`Bio ${lengthErr} 1 and 255 characters`),
-    body("password")
-        .notEmpty().withMessage(`Password ${emptyErr}`)
-        .isLength({ min: 8, max: 50 }).withMessage(`Password ${lengthErr} 8 and 50 characters`),
-    body("confirmPassword")
-        .notEmpty().withMessage(`Password confirmation ${emptyErr}`)
-]
-
-const validateUpdate = [
-    body()
-        .notEmpty().withMessage(`Request body ${emptyErr}`),
-    body("username")
-        .trim()
-        .optional()
-        .isLength({ min: 3, max: 100 }).withMessage(`Username ${lengthErr} 3 and 100 characters`),
-    body("email")
-        .trim()
-        .optional()
-        .isEmail().withMessage(`Email ${typeErr} email`)
-        .isLength({ min: 3, max: 100 }).withMessage(`Email ${lengthErr} 3 and 100 characters`),
-    body("bio")
-        .trim()
-        .optional()
-        .isLength({ min: 1, max: 100 }).withMessage(`Bio ${lengthErr} 1 and 255 characters`),
-]
+import { validationResult } from "express-validator"
+import { validateUser, validateUserUpdate } from "../utils/validations.js"
 
 export const listUsers = async (req, res, next) => {
     const page = parseInt(req.query.page) || 1
@@ -93,7 +49,7 @@ export const createUser = [
     validateUser,
     async (req, res, next) => {
         const errors = validationResult(req)
-        if(!errors.isEmpty()) return next(errors)
+        if(!errors.isEmpty()) return res.status(400).json(errors)
         const { username, email, password, confirmPassword, bio } = req.body
         if(confirmPassword !== password) return res.status(400).json({ error: "Passwords do not match" })
         try {
@@ -177,10 +133,10 @@ export const getUser = async (req, res, next) => {
 }
 
 export const updateUser = [
-    validateUpdate,
+    validateUserUpdate,
     async (req, res, next) => {
         const errors = validationResult(req)
-        if(!errors.isEmpty()) return next(errors)
+        if(!errors.isEmpty()) return res.status(400).json(errors)
         const { id } = req.params
         const { username, email, bio } = req.body
         try {

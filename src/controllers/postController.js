@@ -1,46 +1,7 @@
 import { prisma } from "../lib/prisma.js";
-import { body, validationResult } from "express-validator";
 import CustomNotFoundError from "../utils/CustomNotFoundError.js"
-
-const emptyErr = "is required"
-const lengthErr = "must be between"
-const typeErr = "must be of type"
-
-const validatePost = [
-    body()
-        .notEmpty().withMessage(`Post data ${emptyErr}`),
-    body("title")
-        .trim()
-        .notEmpty().withMessage(`Title ${emptyErr}`)
-        .isLength({ min: 3, max: 100 }).withMessage(`Title ${lengthErr} 3 and 100 characters`),
-    body("content")
-        .trim()
-        .notEmpty().withMessage(`Content ${emptyErr}`)
-        .isLength({ min: 3, max: 255 }).withMessage(`Content ${lengthErr} 3 and 255 characters`),
-    body("visibility")
-        .optional()
-        .isIn(["PUBLIC", "PRIVATE"]).withMessage(`Visibility ${typeErr} PUBLIC or PRIVATE`),
-    body("author_id")
-        .notEmpty().withMessage(`Author ${emptyErr}`)
-]
-
-const validateUpdate = [
-    body()
-        .notEmpty().withMessage(`Post data ${emptyErr}`),
-    body("title")
-        .trim()
-        .optional()
-        .isLength({ min: 3, max: 100 }).withMessage(`Title ${lengthErr} 3 and 100 characters`),
-    body("content")
-        .trim()
-        .optional()
-        .isLength({ min: 3, max: 255 }).withMessage(`Content ${lengthErr} 3 and 255 characters`),
-    body("visibility")
-        .optional()
-        .isIn(["PUBLIC", "PRIVATE"]).withMessage(`Visibility ${typeErr} PUBLIC or PRIVATE`),
-    body("author_id")
-        .optional()
-]
+import { validationResult } from "express-validator";
+import { validatePost, validatePostUpdate } from "../utils/validations.js";
 
 export const listPosts = async (req, res, next) => {
     const page = parseInt(req.query.page) || 1
@@ -87,7 +48,7 @@ export const createPost = [
     validatePost,
     async (req, res, next) => {
         const errors = validationResult(req)
-        if(!errors.isEmpty()) return next(errors)
+        if(!errors.isEmpty()) return res.status(400).json(errors)
         const { title, content, visibility, author_id } = req.body
         try {
             const author = await prisma.user.findUnique({ where: { id: author_id } })
@@ -168,10 +129,10 @@ export const getPost = async (req, res, next) => {
 }
 
 export const updatePost = [
-    validateUpdate,
+    validatePostUpdate,
     async (req, res, next) => {
         const errors = validationResult(req)
-        if(!errors.isEmpty()) return next(errors)
+        if(!errors.isEmpty()) return res.status(400).json(errors)
         const { id } = req.params
         const { title, content, visibility, author_id } = req.body
         try {

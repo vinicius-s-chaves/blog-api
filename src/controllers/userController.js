@@ -143,8 +143,16 @@ export const updateUser = [
         const { id } = req.params
         const { username, email, bio } = req.body
         try {
-            const user = await prisma.user.findUnique({ where: { id } })
+            const user = await prisma.user.findUnique({
+                where: { id },
+                select: {
+                    id: true,
+                    username: true,
+                    email: true
+                }
+            })
             if(!user) return next(new CustomError("User Not Found", 404))
+            if(user.id !== req.user.id) return next(new CustomError("Invalid Session", 401))
             const modifiedUser = await prisma.user.update({
                 where: { id },
                 data: {
@@ -190,8 +198,16 @@ export const updateUser = [
 export const deleteUser = async (req, res, next) => {
     const { id } = req.params
     try {
-        const user = await prisma.user.findUnique({ where: { id } })
+        const user = await prisma.user.findUnique({
+            where: { id },
+            select: {
+                id: true,
+                username: true,
+                email: true
+            }
+        })
         if(!user) return next(new CustomError("User Not Found", 404))
+        if(user.id !== req.user.id) return next(new CustomError("Invalid Session", 401))
         await prisma.user.delete({ where: { id } })
         res.json({ message: "User deleted successfully" })
     } catch (error) {

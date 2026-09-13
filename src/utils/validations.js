@@ -83,6 +83,7 @@ export const validateUser = [
         .optional()
         .isLength({ min: 1, max: 100 }).withMessage(`Bio ${lengthErr} 1 and 255 characters`),
     body("password")
+        .isString().withMessage(`Password ${typeErr} string`)
         .notEmpty().withMessage(`Password ${emptyErr}`)
         .isLength({ min: 8, max: 50 }).withMessage(`Password ${lengthErr} 8 and 50 characters`),
     body("confirmPassword")

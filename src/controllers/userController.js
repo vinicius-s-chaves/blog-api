@@ -2,6 +2,7 @@ import { prisma } from "../lib/prisma.js"
 import { validationResult } from "express-validator"
 import { validateUser, validateUserUpdate } from "../utils/validations.js"
 import CustomError from "../utils/CustomError.js"
+import { hashPassword } from "../utils/hashPassword.js"
 
 export const listUsers = async (req, res, next) => {
     const page = parseInt(req.query.page) || 1
@@ -53,12 +54,13 @@ export const createUser = [
         if(!errors.isEmpty()) return res.status(400).json(errors)
         const { username, email, password, confirmPassword, bio } = req.body
         if(confirmPassword !== password) return res.status(400).json({ error: "Passwords do not match" })
-        try {
+        const hashedPassword = await hashPassword(password)
+            try {
             const user = await prisma.user.create({
                 data: {
                     username,
                     email,
-                    password,
+                    password: hashedPassword,
                     bio
                 },
                 include: {

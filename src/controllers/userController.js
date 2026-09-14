@@ -152,7 +152,7 @@ export const updateUser = [
                 }
             })
             if(!user) return next(new CustomError("User Not Found", 404))
-            if(user.id !== req.user.id) return next(new CustomError("Invalid Session", 401))
+            if(user.id !== req.user.id) return next(new CustomError("You are not allowed to edit these informations", 403))
             const modifiedUser = await prisma.user.update({
                 where: { id },
                 data: {
@@ -207,7 +207,7 @@ export const deleteUser = async (req, res, next) => {
             }
         })
         if(!user) return next(new CustomError("User Not Found", 404))
-        if(user.id !== req.user.id) return next(new CustomError("Invalid Session", 401))
+        if(user.id !== req.user.id) return next(new CustomError("You are not allowed to delete this user", 403))
         await prisma.user.delete({ where: { id } })
         res.json({ message: "User deleted successfully" })
     } catch (error) {

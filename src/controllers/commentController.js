@@ -118,7 +118,7 @@ export const updateComment = [
         try {
             const comment = await prisma.comment.findUnique({ where: { id } })
             if(!comment) return next(new CustomError("Comment Not Found", 404))
-            if(comment.author_id !== req.user.id) return next(new CustomError("Invalid Sesssion", 401))
+            if(comment.author_id !== req.user.id) return next(new CustomError("You are not allowed to edit this comment", 403))
             const modifiedComment = await prisma.comment.update({
                 where: { id },
                 data: {
@@ -156,7 +156,7 @@ export const deleteComment = async (req, res, next) => {
     try {
         const comment = await prisma.comment.findUnique({ where: { id } })
         if(!comment) return next(new CustomError("Comment Not Found", 404))
-        if(comment.author_id !== req.user.id) return next(new CustomError("Invalid Session", 401))
+        if(comment.author_id !== req.user.id) return next(new CustomError("You are not allowed to delete this comment", 403))
         await prisma.comment.delete({ where: { id } })
         res.json({ message: "Comment deleted successfully" })
     } catch (error) {

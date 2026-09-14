@@ -136,7 +136,7 @@ export const updatePost = [
         try {
             const post = await prisma.post.findUnique({ where: { id } })
             if(!post) return next(new CustomError("Post Not Found", 404))
-            if(post.author_id !== req.user.id) return next(new CustomError("Invalid Session", 401))
+            if(post.author_id !== req.user.id) return next(new CustomError("You are not allowed to edit this post", 403))
             const modifiedPost = await prisma.post.update({
                 where: { id },
                 data: {
@@ -182,7 +182,7 @@ export const deletePost = async (req, res, next) => {
     try {
         const post = await prisma.post.findUnique({ where: { id } })
         if(!post) return next(new CustomError("Post Not Found", 404))
-        if(post.author_id !== req.user.id) return next("Invalid Session", 401)
+        if(post.author_id !== req.user.id) return next("You are not allowed to delete this post", 403)
         await prisma.post.delete({ where: { id } })
         res.json({ message: "Post deleted successfully" })
     } catch (error) {

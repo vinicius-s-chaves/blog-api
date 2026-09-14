@@ -30,7 +30,7 @@ model Post {
   content    String
   visibility Visibility @default(PUBLIC)
   author_id  String
-  author     User       @relation(fields: [author_id], references: [id])
+  author     User       @relation(fields: [author_id], references: [id], onDelete: Cascade)
   posted_at  DateTime   @default(now())
   updated_at DateTime   @updatedAt
   comments   Comment[]
@@ -42,9 +42,9 @@ model Comment {
   id         String   @id @default(uuid())
   content    String
   author_id  String
-  author     User     @relation(fields: [author_id], references: [id])
+  author     User     @relation(fields: [author_id], references: [id], onDelete: Cascade)
   post_id    String
-  post       Post     @relation(fields: [post_id], references: [id])
+  post       Post     @relation(fields: [post_id], references: [id], onDelete: Cascade)
   posted_at  DateTime @default(now())
   updated_at DateTime @updatedAt
 

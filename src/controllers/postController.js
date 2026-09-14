@@ -49,16 +49,14 @@ export const createPost = [
     async (req, res, next) => {
         const errors = validationResult(req)
         if(!errors.isEmpty()) return res.status(400).json(errors)
-        const { title, content, visibility, author_id } = req.body
+        const { title, content, visibility } = req.body
         try {
-            const author = await prisma.user.findUnique({ where: { id: author_id } })
-            if(!author) return next(new CustomNotFoundError("Author Not Found"))
             const post = await prisma.post.create({
                 data: {
                     title,
                     content,
                     visibility,
-                    author: { connect: { id: author_id } }
+                    author: { connect: { id: req.user.id } }
                 },
                 include: {
                     author: {
@@ -134,17 +132,17 @@ export const updatePost = [
         const errors = validationResult(req)
         if(!errors.isEmpty()) return res.status(400).json(errors)
         const { id } = req.params
-        const { title, content, visibility, author_id } = req.body
+        const { title, content, visibility } = req.body
         try {
             const post = await prisma.post.findUnique({ where: { id } })
             if(!post) return next(new CustomError("Post Not Found", 404))
+            if(post.author_id !== req.user.id) return next(new CustomError("Invalid Session", 401))
             const modifiedPost = await prisma.post.update({
                 where: { id },
                 data: {
                     title,
                     content,
-                    visibility,
-                    author_id
+                    visibility
                 },
                 include: {
                     author: {
@@ -184,6 +182,7 @@ export const deletePost = async (req, res, next) => {
     try {
         const post = await prisma.post.findUnique({ where: { id } })
         if(!post) return next(new CustomError("Post Not Found", 404))
+        if(post.author_id !== req.user.id) return next("Invalid Session", 401)
         await prisma.post.delete({ where: { id } })
         res.json({ message: "Post deleted successfully" })
     } catch (error) {

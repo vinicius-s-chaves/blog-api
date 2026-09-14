@@ -18,8 +18,6 @@ export const validatePost = [
     body("visibility")
         .optional()
         .isIn(["PUBLIC", "PRIVATE"]).withMessage(`Visibility ${typeErr} PUBLIC or PRIVATE`),
-    body("author_id")
-        .notEmpty().withMessage(`Author ${emptyErr}`)
 ]
 
 export const validatePostUpdate = [
@@ -36,8 +34,6 @@ export const validatePostUpdate = [
     body("visibility")
         .optional()
         .isIn(["PUBLIC", "PRIVATE"]).withMessage(`Visibility ${typeErr} PUBLIC or PRIVATE`),
-    body("author_id")
-        .optional()
 ]
 
 export const validateComment = [

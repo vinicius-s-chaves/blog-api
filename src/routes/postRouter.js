@@ -6,13 +6,14 @@ import {
     listPosts,
     updatePost
 } from "../controllers/postController.js";
+import { authenticateToken } from "../middlewares/authenticateToken.js";
 
 const postRouter = Router()
 
 postRouter.get("/", listPosts)
-postRouter.post("/", createPost)
+postRouter.post("/", authenticateToken, createPost)
 postRouter.get("/:id", getPost)
-postRouter.put("/:id", updatePost)
-postRouter.delete("/:id", deletePost)
+postRouter.put("/:id", authenticateToken, updatePost)
+postRouter.delete("/:id", authenticateToken, deletePost)
 
 export { postRouter }

@@ -42,16 +42,14 @@ export const createComment = [
     async (req, res, next) => {
         const errors = validationResult(req)
         if(!errors.isEmpty()) return res.status(400).json(errors)
-        const { content, author_id, post_id } = req.body
+        const { content, post_id } = req.body
         try {
-            const author = await prisma.user.findUnique({ where: { id: author_id } })
-            if(!author) return next(new CustomError("Author Not Found", 404))
             const post = await prisma.post.findUnique({ where: { id: post_id } })
             if(!post) return next(new CustomError("Post Not Found", 404))
             const comment = await prisma.comment.create({
                 data: {
                     content,
-                    author: { connect: { id: author_id } },
+                    author: { connect: { id: req.user.id } },
                     post: { connect: { id: post_id } }
                 },
                 include: {
@@ -120,6 +118,7 @@ export const updateComment = [
         try {
             const comment = await prisma.comment.findUnique({ where: { id } })
             if(!comment) return next(new CustomError("Comment Not Found", 404))
+            if(comment.author_id !== req.user.id) return next(new CustomError("Invalid Sesssion", 401))
             const modifiedComment = await prisma.comment.update({
                 where: { id },
                 data: {
@@ -157,6 +156,7 @@ export const deleteComment = async (req, res, next) => {
     try {
         const comment = await prisma.comment.findUnique({ where: { id } })
         if(!comment) return next(new CustomError("Comment Not Found", 404))
+        if(comment.author_id !== req.user.id) return next(new CustomError("Invalid Session", 401))
         await prisma.comment.delete({ where: { id } })
         res.json({ message: "Comment deleted successfully" })
     } catch (error) {

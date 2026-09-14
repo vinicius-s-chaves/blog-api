@@ -17,7 +17,7 @@ export const validatePost = [
         .isLength({ min: 3, max: 255 }).withMessage(`Content ${lengthErr} 3 and 255 characters`),
     body("visibility")
         .optional()
-        .isIn(["PUBLIC", "PRIVATE"]).withMessage(`Visibility ${typeErr} PUBLIC or PRIVATE`),
+        .isIn(["PUBLIC", "PRIVATE"]).withMessage(`Visibility ${typeErr} PUBLIC or PRIVATE`)
 ]
 
 export const validatePostUpdate = [
@@ -33,7 +33,7 @@ export const validatePostUpdate = [
         .isLength({ min: 3, max: 255 }).withMessage(`Content ${lengthErr} 3 and 255 characters`),
     body("visibility")
         .optional()
-        .isIn(["PUBLIC", "PRIVATE"]).withMessage(`Visibility ${typeErr} PUBLIC or PRIVATE`),
+        .isIn(["PUBLIC", "PRIVATE"]).withMessage(`Visibility ${typeErr} PUBLIC or PRIVATE`)
 ]
 
 export const validateComment = [
@@ -43,8 +43,6 @@ export const validateComment = [
         .trim()
         .notEmpty().withMessage(`Content ${emptyErr}`)
         .isLength({ min: 1, max: 255 }).withMessage(`Comment ${lengthErr} 1 and 255 characters`),
-    body("author_id")
-        .notEmpty().withMessage(`Author ${emptyErr}`),
     body("post_id")
         .notEmpty().withMessage(`Post ${emptyErr}`)
 ]
@@ -55,11 +53,7 @@ export const validateCommentUpdate = [
     body("content")
         .trim()
         .optional()
-        .isLength({ min: 1, max: 255 }).withMessage(`Comment ${lengthErr} 1 and 255 characters`),
-    body("author_id")
-        .optional(),
-    body("post_id")
-        .optional()
+        .isLength({ min: 1, max: 255 }).withMessage(`Comment ${lengthErr} 1 and 255 characters`)
 ]
 
 export const validateUser = [
